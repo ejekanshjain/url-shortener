@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const ejs = require('ejs')
 const cors = require('cors')
+const shortid = require('shortid')
 
 const db = require('./db')
 const shortUrl = require('./shortUrl.model')
@@ -19,7 +20,10 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/', async (req, res) => {
-    await shortUrl.create({ fullUrl: req.body.fullUrl })
+    await shortUrl.create({
+        fullUrl: req.body.fullUrl,
+        shortUrl: shortid.generate()
+    })
     res.redirect('/')
 })
 
