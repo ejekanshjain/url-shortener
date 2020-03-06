@@ -5,33 +5,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Url Shortener</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-input {
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .text-input input[type="url"] {
+            display: inline-block;
+            width: 500px;
+            height: 40px;
+            box-sizing: border-box;
+            outline: none;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            padding: 10px 10px 10px 100px;
+            transition: all 0.1s ease-out;
+        }
+
+        .text-input input[type="url"]+label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            height: 40px;
+            line-height: 40px;
+            color: white;
+            border-radius: 3px 0 0 3px;
+            padding: 0 20px;
+            background: #e03616;
+            transform: translateZ(0) translateX(0);
+            transition: all 0.3s ease-in;
+            transition-delay: 0.2s;
+        }
+
+        .text-input input[type="url"]:focus+label {
+            transform: translateY(-120%) translateX(0%);
+            border-radius: 3px;
+            transition: all 0.1s ease-out;
+        }
+
+        .text-input input[type="url"]:focus {
+            padding: 10px;
+            transition: all 0.3s ease-out;
+            transition-delay: 0.2s;
+        }
+
+        .align-center {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            width: 80px;
+            height: 40px;
+            color: #fff;
+            background-color: #e03616;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            background-color: #ff0000;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table caption {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+            table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <form action="/" , method="POST">
-            <input type="url" name="fullUrl" id="fullUrl" required />
-            <button type="submit">Shorten</button>
-        </form>
-        <table>
-            <thead>
-                <tr>
-                    <th>Full URL</th>
-                    <th>Short URL</th>
-                    <th>Clicks</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% shortUrls.forEach(shortUrl => {%>
-                <tr>
-                    <td><a href="<%= shortUrl.fullUrl %>"><%= shortUrl.fullUrl %></a></td>
-                    <td><a href="<%= shortUrl.shortUrl %>"><%= shortUrl.shortUrl %></a></td>
-                    <td><%= shortUrl.clicks %></td>
-                </tr>
-                <%}) %>
-            </tbody>
-        </table>
-    </div>
+    <section>
+        <div>
+            <h1>Url Shortener</h1>
+        </div>
+    </section>
+    <section>
+        <div>
+            <form action="/" , method="POST">
+                <div class="text-input">
+                    <input type="url" name="fullUrl" id="fullUrl" placeholder="Enter Full Url" required />
+                    <label for="fullUrl">URL</label>
+                </div>
+                <div class="align-center">
+                    <button class="btn" type="submit">Shorten</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full URL</th>
+                        <th>Short URL</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% shortUrls.forEach(shortUrl => {%>
+                    <tr>
+                        <td><a href="<%= shortUrl.fullUrl %>"><%= shortUrl.fullUrl %></a></td>
+                        <td><a href="<%= shortUrl.shortUrl %>"><%= shortUrl.shortUrl %></a></td>
+                        <td><%= shortUrl.clicks %></td>
+                    </tr>
+                    <%}) %>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </body>
 
 </html>
